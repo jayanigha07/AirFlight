@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# Large Datasets (>100MB blocked by GitHub)
+data_raw/flights.parquet
+*.parquet
+
+# Java / MapReduce compilation artifacts
+*.class
+mapreduce/bin/
+
+# IDE / Editor configuration
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Operating System
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs & Temporary Files
+*.log
+tmp/
+*.tmp
+.cache/

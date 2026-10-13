@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Route Reliability — AirFlight</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            primary: { DEFAULT: '#004ac6', hover: '#003ea8', container: '#2563eb' }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <a href="index.html#home" class="flex items-center gap-2.5 text-primary cursor-pointer select-none shrink-0">
+        <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">flight</span>
+        </div>
+        <span class="text-lg font-bold tracking-tight text-slate-900">AirFlight</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-2 lg:gap-4">
+        <a href="index.html#home" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Home</a>
+        <a href="index.html#best-time-to-fly" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Best Time to Fly</a>
+        <a href="index.html#route-reliability" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors bg-primary text-white shadow-sm" aria-current="page">Route Reliability</a>
+        <a href="index.html#historical-risk-advisor" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Historical Risk</a>
+      </nav>
+      <div class="hidden lg:flex items-center gap-2 text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>216k Real BTS Flights</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-6">
+    <div class="space-y-1">
+      <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">Route Reliability</h1>
+      <p class="text-sm sm:text-base text-slate-600">
+        Evaluate historical reliability scores, delay rates, and corridor consistency between hub pairs.
+      </p>
+    </div>
+
+    <!-- Input Form -->
+    <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+      <form id="route-reliability-form" class="space-y-4">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          <div class="space-y-1.5">
+            <label for="rr-origin" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Origin Hub</label>
+            <select id="rr-origin" data-default="ORD" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary">
+              <option value="ORD">ORD — Chicago O'Hare</option>
+            </select>
+          </div>
+          <div class="space-y-1.5">
+            <label for="rr-dest" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Destination Hub</label>
+            <select id="rr-dest" data-default="LGA" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary">
+              <option value="LGA">LGA — New York LaGuardia</option>
+            </select>
+          </div>
+          <div class="space-y-1.5 flex flex-col justify-end">
+            <button type="submit" class="h-10 px-5 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+              <span class="material-symbols-outlined text-[18px]">analytics</span>
+              <span>Check Reliability</span>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Results Container -->
+    <div id="route-reliability-results" class="space-y-6">
+      <div class="p-8 rounded-xl bg-white border border-slate-200 text-center space-y-2">
+        <span class="material-symbols-outlined text-slate-400 text-[36px]">alt_route</span>
+        <h3 class="text-base font-semibold text-slate-800">Select Corridor to Inspect</h3>
+        <p class="text-sm text-slate-500 max-w-md mx-auto">
+          Select origin and destination hubs above to compute the empirical 0–100 reliability score.
+        </p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <p class="font-medium text-slate-700">AirFlight Historical Reliability Platform • BTS 2015 dataset</p>
+      <p class="text-slate-400">Descriptive historical analysis only • Not a future guarantee</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

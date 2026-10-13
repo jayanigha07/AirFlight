@@ -1,0 +1,206 @@
+{
+  "total_rows": 216000,
+  "total_columns": 31,
+  "month_distribution": {
+    "1": 18000,
+    "2": 18000,
+    "3": 18000,
+    "4": 18000,
+    "5": 18000,
+    "6": 18000,
+    "7": 18000,
+    "8": 18000,
+    "9": 18000,
+    "10": 18000,
+    "11": 18000,
+    "12": 18000
+  },
+  "columns": {
+    "YEAR": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 1
+    },
+    "MONTH": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 12
+    },
+    "DAY": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 2
+    },
+    "DAY_OF_WEEK": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 7
+    },
+    "AIRLINE": {
+      "dtype": "object",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 14
+    },
+    "FLIGHT_NUMBER": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 6468
+    },
+    "TAIL_NUMBER": {
+      "dtype": "object",
+      "null_count": 1268,
+      "null_pct": 0.59,
+      "unique_count": 4664
+    },
+    "ORIGIN_AIRPORT": {
+      "dtype": "object",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 624
+    },
+    "DESTINATION_AIRPORT": {
+      "dtype": "object",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 624
+    },
+    "SCHEDULED_DEPARTURE": {
+      "dtype": "object",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 1266
+    },
+    "DEPARTURE_TIME": {
+      "dtype": "object",
+      "null_count": 6517,
+      "null_pct": 3.02,
+      "unique_count": 1391
+    },
+    "DEPARTURE_DELAY": {
+      "dtype": "float64",
+      "null_count": 6517,
+      "null_pct": 3.02,
+      "unique_count": 579
+    },
+    "TAXI_OUT": {
+      "dtype": "float64",
+      "null_count": 6670,
+      "null_pct": 3.09,
+      "unique_count": 153
+    },
+    "WHEELS_OFF": {
+      "dtype": "object",
+      "null_count": 6670,
+      "null_pct": 3.09,
+      "unique_count": 1396
+    },
+    "SCHEDULED_TIME": {
+      "dtype": "float64",
+      "null_count": 1,
+      "null_pct": 0.0,
+      "unique_count": 516
+    },
+    "ELAPSED_TIME": {
+      "dtype": "float64",
+      "null_count": 7419,
+      "null_pct": 3.43,
+      "unique_count": 564
+    },
+    "AIR_TIME": {
+      "dtype": "float64",
+      "null_count": 7419,
+      "null_pct": 3.43,
+      "unique_count": 544
+    },
+    "DISTANCE": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 1320
+    },
+    "WHEELS_ON": {
+      "dtype": "object",
+      "null_count": 6853,
+      "null_pct": 3.17,
+      "unique_count": 1431
+    },
+    "TAXI_IN": {
+      "dtype": "float64",
+      "null_count": 6853,
+      "null_pct": 3.17,
+      "unique_count": 113
+    },
+    "SCHEDULED_ARRIVAL": {
+      "dtype": "object",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 1370
+    },
+    "ARRIVAL_TIME": {
+      "dtype": "object",
+      "null_count": 6853,
+      "null_pct": 3.17,
+      "unique_count": 1431
+    },
+    "ARRIVAL_DELAY": {
+      "dtype": "float64",
+      "null_count": 7419,
+      "null_pct": 3.43,
+      "unique_count": 614
+    },
+    "DIVERTED": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 2
+    },
+    "CANCELLED": {
+      "dtype": "int64",
+      "null_count": 0,
+      "null_pct": 0.0,
+      "unique_count": 2
+    },
+    "CANCELLATION_REASON": {
+      "dtype": "object",
+      "null_count": 209273,
+      "null_pct": 96.89,
+      "unique_count": 3
+    },
+    "AIR_SYSTEM_DELAY": {
+      "dtype": "float64",
+      "null_count": 176540,
+      "null_pct": 81.73,
+      "unique_count": 293
+    },
+    "SECURITY_DELAY": {
+      "dtype": "float64",
+      "null_count": 176540,
+      "null_pct": 81.73,
+      "unique_count": 50
+    },
+    "AIRLINE_DELAY": {
+      "dtype": "float64",
+      "null_count": 176540,
+      "null_pct": 81.73,
+      "unique_count": 450
+    },
+    "LATE_AIRCRAFT_DELAY": {
+      "dtype": "float64",
+      "null_count": 176540,
+      "null_pct": 81.73,
+      "unique_count": 373
+    },
+    "WEATHER_DELAY": {
+      "dtype": "float64",
+      "null_count": 176540,
+      "null_pct": 81.73,
+      "unique_count": 304
+    }
+  }
+}

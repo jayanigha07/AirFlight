@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>AirFlight — Historical Flight Reliability & Delay Intelligence</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: { sans: ['Inter', 'sans-serif'] },
+          colors: {
+            primary: { DEFAULT: '#004ac6', hover: '#003ea8', container: '#2563eb' }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <a href="index.html#home" class="flex items-center gap-2.5 text-primary cursor-pointer select-none shrink-0">
+        <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">flight</span>
+        </div>
+        <span class="text-lg font-bold tracking-tight text-slate-900">AirFlight</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-2 lg:gap-4">
+        <a href="index.html#home" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors bg-primary text-white shadow-sm" aria-current="page">Home</a>
+        <a href="index.html#best-time-to-fly" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Best Time to Fly</a>
+        <a href="index.html#route-reliability" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Route Reliability</a>
+        <a href="index.html#historical-risk-advisor" class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Historical Risk</a>
+      </nav>
+      <div class="hidden lg:flex items-center gap-2 text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span>216k Real BTS Flights</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+    <div class="py-8 sm:py-14 space-y-12">
+      <div class="text-center max-w-3xl mx-auto space-y-4">
+        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-primary border border-blue-200">
+          <span class="material-symbols-outlined text-[15px]">verified</span>
+          <span>Empirical Aviation Intelligence</span>
+        </div>
+        <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+          Fly smarter with <span class="text-primary">historical flight insights</span>.
+        </h1>
+        <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+          Compare departure windows, evaluate route reliability scores, and assess delay risks using 216,000 real U.S. flight records.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[26px]">schedule</span>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Best Time to Fly</h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Discover whether morning, afternoon, or evening departures historically experience the lowest delay rates on your route.
+            </p>
+          </div>
+          <a href="index.html#best-time-to-fly" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Find Best Time</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[26px]">alt_route</span>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Route Reliability</h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Check the objective 0–100 reliability score, historical delay frequency, and cancellation rates between any two airport hubs.
+            </p>
+          </div>
+          <a href="index.html#route-reliability" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Check Reliability</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </a>
+        </div>
+
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-5">
+          <div class="space-y-3">
+            <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-[26px]">shield_check</span>
+            </div>
+            <h2 class="text-xl font-bold text-slate-900">Historical Risk Advisor</h2>
+            <p class="text-sm text-slate-600 leading-relaxed">
+              Evaluate your scheduled airline, time, and month to see if you are in a high-risk window and discover safer alternatives.
+            </p>
+          </div>
+          <a href="index.html#historical-risk-advisor" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+            <span>Evaluate Flight Risk</span>
+            <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+          </a>
+        </div>
+      </div>
+
+      <div class="p-4 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600 text-center max-w-xl mx-auto space-y-1">
+        <p class="font-medium text-slate-800">Descriptive Historical Analysis</p>
+        <p>Results reflect real commercial flight operations recorded by the U.S. Bureau of Transportation Statistics. We present historical operational records, not guarantees of future flight outcomes.</p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="bg-white border-t border-slate-200 py-6 text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <p class="font-medium text-slate-700">AirFlight Historical Reliability Platform • BTS 2015 dataset</p>
+      <p class="text-slate-400">Descriptive historical analysis only • Not a future guarantee</p>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

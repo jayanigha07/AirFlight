@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>AirFlight — Historical Flight Reliability & Delay Intelligence</title>
+  
+  <!-- Google Fonts: Inter & Material Symbols -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif']
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#004ac6',
+              hover: '#003ea8',
+              container: '#2563eb',
+              light: '#eff4fe'
+            }
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body { font-family: 'Inter', sans-serif; background-color: #f8fafc; color: #0f172a; }
+    .page-view { display: none; }
+    .page-view.active { display: block; }
+    .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased">
+
+  <!-- ==================================================================== -->
+  <!-- 1. SIMPLIFIED, UNCLUTTERED HEADER & NAVIGATION -->
+  <!-- AirFlight | Home | Best Time to Fly | Route Reliability | Historical Risk -->
+  <!-- ==================================================================== -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-xs">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+      <!-- Brand Logo -->
+      <a href="#home" onclick="navigateTo('home'); return false;" class="flex items-center gap-2.5 text-primary cursor-pointer select-none shrink-0">
+        <div class="w-8 h-8 rounded-lg bg-primary text-white flex items-center justify-center font-bold shadow-sm">
+          <span class="material-symbols-outlined text-[20px]">flight</span>
+        </div>
+        <span class="text-lg font-bold tracking-tight text-slate-900">AirFlight</span>
+      </a>
+
+      <!-- Desktop Navigation with Generous Spacing -->
+      <nav class="hidden md:flex items-center gap-2 lg:gap-4" id="desktop-nav">
+        <a href="#home" data-path="home" onclick="navigateTo('home'); return false;"
+           class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors bg-primary text-white shadow-sm" aria-current="page">Home</a>
+        <a href="#best-time-to-fly" data-path="best-time-to-fly" onclick="navigateTo('best-time-to-fly'); return false;"
+           class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Best Time to Fly</a>
+        <a href="#route-reliability" data-path="route-reliability" onclick="navigateTo('route-reliability'); return false;"
+           class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Route Reliability</a>
+        <a href="#historical-risk-advisor" data-path="historical-risk-advisor" onclick="navigateTo('historical-risk-advisor'); return false;"
+           class="px-3.5 py-1.5 rounded-lg text-sm font-semibold transition-colors text-slate-600 hover:bg-slate-100 hover:text-slate-900">Historical Risk</a>
+      </nav>
+
+      <!-- Right Indicator / Mobile Toggle -->
+      <div class="flex items-center gap-3">
+        <!-- 216k Indicator (Shown on lg: screens where space permits) -->
+        <div class="hidden lg:flex items-center gap-2 text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200">
+          <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          <span>216k Real BTS Flights</span>
+        </div>
+
+        <!-- Mobile Menu Toggle Button -->
+        <button id="mobile-menu-btn" onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-lg text-slate-600 hover:text-slate-900 hover:bg-slate-100 focus:outline-none" aria-label="Toggle Navigation Menu">
+          <span class="material-symbols-outlined text-[24px]">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Collapsible Menu (Compact, clean navigation on smaller screens) -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-slate-200 bg-white px-4 py-3 space-y-1 shadow-lg">
+      <a href="#home" data-path="home" onclick="navigateTo('home'); toggleMobileMenu(); return false;"
+         class="block px-3.5 py-2 rounded-lg text-sm font-semibold bg-primary text-white">Home</a>
+      <a href="#best-time-to-fly" data-path="best-time-to-fly" onclick="navigateTo('best-time-to-fly'); toggleMobileMenu(); return false;"
+         class="block px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900">Best Time to Fly</a>
+      <a href="#route-reliability" data-path="route-reliability" onclick="navigateTo('route-reliability'); toggleMobileMenu(); return false;"
+         class="block px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900">Route Reliability</a>
+      <a href="#historical-risk-advisor" data-path="historical-risk-advisor" onclick="navigateTo('historical-risk-advisor'); toggleMobileMenu(); return false;"
+         class="block px-3.5 py-2 rounded-lg text-sm font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900">Historical Risk</a>
+      <div class="pt-2 mt-1 border-t border-slate-100 flex items-center gap-2 text-xs text-slate-500 px-3.5 py-1">
+        <span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+        <span>216k Real BTS Flights Baseline</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ==================================================================== -->
+  <!-- 2. MAIN APPLICATION VIEWS -->
+  <!-- ==================================================================== -->
+  <main class="flex-1 max-w-6xl w-full mx-auto px-4 sm:px-6 py-8">
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- VIEW 1: HOME (Clean & Orienting Travel Application) -->
+    <!-- ------------------------------------------------------------------ -->
+    <div id="view-home" class="page-view active">
+      <div class="py-8 sm:py-12 space-y-10">
+        <!-- Hero Section -->
+        <div class="text-center max-w-3xl mx-auto space-y-3.5">
+          <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold bg-blue-50 text-primary border border-blue-200">
+            <span class="material-symbols-outlined text-[15px]">verified</span>
+            <span>Historical Aviation Intelligence</span>
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-slate-900 leading-tight">
+            Fly smarter with <span class="text-primary">historical flight data</span>.
+          </h1>
+          <p class="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Compare departure windows, evaluate route reliability scores, and assess flight delay risks using 216,000 real U.S. Bureau of Transportation Statistics records.
+          </p>
+        </div>
+
+        <!-- Three Primary Tool Entry Points -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-2">
+          <!-- Action 1: Best Time to Fly -->
+          <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-5">
+            <div class="space-y-3">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[26px]">schedule</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">Best Time to Fly</h2>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Discover whether morning, afternoon, or evening departures historically experience the lowest delay rates on your route.
+              </p>
+            </div>
+            <button onclick="navigateTo('best-time-to-fly')" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+              <span>Find Best Time</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+          </div>
+
+          <!-- Action 2: Route Reliability -->
+          <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-5">
+            <div class="space-y-3">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[26px]">alt_route</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">Route Reliability</h2>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Check the objective 0–100 reliability score, historical delay frequency, and cancellation rates between any two airport hubs.
+              </p>
+            </div>
+            <button onclick="navigateTo('route-reliability')" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+              <span>Check Reliability</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+          </div>
+
+          <!-- Action 3: Historical Risk Advisor -->
+          <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between space-y-5">
+            <div class="space-y-3">
+              <div class="w-12 h-12 rounded-xl bg-blue-50 text-primary flex items-center justify-center">
+                <span class="material-symbols-outlined text-[26px]">shield_check</span>
+              </div>
+              <h2 class="text-xl font-bold text-slate-900">Historical Risk Advisor</h2>
+              <p class="text-sm text-slate-600 leading-relaxed">
+                Evaluate your scheduled airline, route, time window, and month to see historical delay risk and discover lower-delay alternatives.
+              </p>
+            </div>
+            <button onclick="navigateTo('historical-risk-advisor')" class="w-full py-2.5 px-4 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-1.5 shadow-sm">
+              <span>Evaluate Flight Risk</span>
+              <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Trust Note -->
+        <div class="p-4 rounded-xl bg-slate-100 border border-slate-200 text-xs text-slate-600 text-center max-w-xl mx-auto space-y-1">
+          <p class="font-medium text-slate-800">Descriptive Historical Analysis</p>
+          <p>Results reflect real commercial flight operations recorded by the U.S. Bureau of Transportation Statistics. We present historical operational records, not guarantees of future flight outcomes.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- VIEW 2: BEST TIME TO FLY -->
+    <!-- Input → Clear answer → 2–4 key metrics → One useful visualization → Optional details -->
+    <!-- ------------------------------------------------------------------ -->
+    <div id="view-best-time-to-fly" class="page-view">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <!-- Screen Title -->
+        <div class="space-y-1">
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">Best Time to Fly</h1>
+          <p class="text-sm sm:text-base text-slate-600">
+            Identify which departure window historically minimized flight delays on your route.
+          </p>
+        </div>
+
+        <!-- 1. INPUT FORM CARD -->
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+          <form id="best-time-form" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              <!-- Origin Airport -->
+              <div class="space-y-1.5">
+                <label for="bt-origin" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Origin</label>
+                <select id="bt-origin" data-default="ORD" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="ORD">ORD — Chicago O'Hare</option>
+                </select>
+              </div>
+
+              <!-- Destination Airport -->
+              <div class="space-y-1.5">
+                <label for="bt-dest" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Destination</label>
+                <select id="bt-dest" data-default="LGA" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="LGA">LGA — New York LaGuardia</option>
+                </select>
+              </div>
+
+              <!-- Month Selection: All months + January ... December -->
+              <div class="space-y-1.5">
+                <label for="bt-month" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Month</label>
+                <select id="bt-month" class="w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="all" selected>All months</option>
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6">June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="space-y-1.5 flex flex-col justify-end">
+                <button type="submit" class="h-10 px-5 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">search</span>
+                  <span>Find Best Time</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- RESULTS CONTAINER -->
+        <div id="best-time-results" class="space-y-6">
+          <div class="p-8 rounded-xl bg-white border border-slate-200 text-center space-y-2">
+            <span class="material-symbols-outlined text-slate-400 text-[36px]">schedule</span>
+            <h3 class="text-base font-semibold text-slate-800">Select Route to Evaluate</h3>
+            <p class="text-sm text-slate-500 max-w-md mx-auto">
+              Choose your origin, destination, and month above, then click <strong>Find Best Time</strong> to compare historical performance across Morning, Afternoon, Evening, and Night.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- VIEW 3: ROUTE RELIABILITY -->
+    <!-- Input → Clear answer → 2–4 key metrics → One useful visualization → Optional details -->
+    <!-- ------------------------------------------------------------------ -->
+    <div id="view-route-reliability" class="page-view">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <!-- Screen Title -->
+        <div class="space-y-1">
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">Route Reliability</h1>
+          <p class="text-sm sm:text-base text-slate-600">
+            Evaluate historical reliability scores, delay rates, and corridor consistency between hub pairs.
+          </p>
+        </div>
+
+        <!-- 1. INPUT FORM CARD -->
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+          <form id="route-reliability-form" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <!-- Origin -->
+              <div class="space-y-1.5">
+                <label for="rr-origin" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Origin Hub</label>
+                <select id="rr-origin" data-default="ORD" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="ORD">ORD — Chicago O'Hare</option>
+                </select>
+              </div>
+
+              <!-- Destination -->
+              <div class="space-y-1.5">
+                <label for="rr-dest" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Destination Hub</label>
+                <select id="rr-dest" data-default="LGA" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="LGA">LGA — New York LaGuardia</option>
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="space-y-1.5 flex flex-col justify-end">
+                <button type="submit" class="h-10 px-5 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">analytics</span>
+                  <span>Check Reliability</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- RESULTS CONTAINER -->
+        <div id="route-reliability-results" class="space-y-6">
+          <div class="p-8 rounded-xl bg-white border border-slate-200 text-center space-y-2">
+            <span class="material-symbols-outlined text-slate-400 text-[36px]">alt_route</span>
+            <h3 class="text-base font-semibold text-slate-800">Select Corridor to Inspect</h3>
+            <p class="text-sm text-slate-500 max-w-md mx-auto">
+              Select any origin and destination above to compute its empirical 0–100 reliability score based on 216,000 BTS flight records.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ------------------------------------------------------------------ -->
+    <!-- VIEW 4: HISTORICAL RISK ADVISOR -->
+    <!-- Input → Clear answer → 2–4 key metrics → One useful visualization → Optional details -->
+    <!-- ------------------------------------------------------------------ -->
+    <div id="view-historical-risk-advisor" class="page-view">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <!-- Screen Title -->
+        <div class="space-y-1">
+          <h1 class="text-2xl sm:text-3xl font-bold text-slate-900">Historical Risk Advisor</h1>
+          <p class="text-sm sm:text-base text-slate-600">
+            Simulate your specific flight itinerary to identify delay risk and discover safer historical alternatives.
+          </p>
+        </div>
+
+        <!-- 1. INPUT FORM CARD (All 5 Parameters) -->
+        <div class="bg-white rounded-xl p-6 border border-slate-200 shadow-sm">
+          <form id="risk-advisor-form" class="space-y-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+              <!-- 1. Airline -->
+              <div class="space-y-1.5">
+                <label for="ra-airline" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Airline</label>
+                <select id="ra-airline" data-default="UA" class="airline-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="UA">United Airlines (UA)</option>
+                </select>
+              </div>
+
+              <!-- 2. Origin -->
+              <div class="space-y-1.5">
+                <label for="ra-origin" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Origin</label>
+                <select id="ra-origin" data-default="ORD" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="ORD">ORD — Chicago O'Hare</option>
+                </select>
+              </div>
+
+              <!-- 3. Destination -->
+              <div class="space-y-1.5">
+                <label for="ra-dest" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Destination</label>
+                <select id="ra-dest" data-default="EWR" class="airport-select w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="EWR">EWR — Newark Liberty</option>
+                </select>
+              </div>
+
+              <!-- 4. Month (All 12 Months: January ... December) -->
+              <div class="space-y-1.5">
+                <label for="ra-month" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Month</label>
+                <select id="ra-month" class="w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="4">April</option>
+                  <option value="5">May</option>
+                  <option value="6" selected>June</option>
+                  <option value="7">July</option>
+                  <option value="8">August</option>
+                  <option value="9">September</option>
+                  <option value="10">October</option>
+                  <option value="11">November</option>
+                  <option value="12">December</option>
+                </select>
+              </div>
+
+              <!-- 5. Departure Window -->
+              <div class="space-y-1.5">
+                <label for="ra-time" class="block text-xs font-semibold uppercase text-slate-500 tracking-wider">Window</label>
+                <select id="ra-time" class="w-full h-10 px-3 rounded-lg border border-slate-300 bg-white text-sm font-medium text-slate-800 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary">
+                  <option value="EVENING" selected>Evening (17:00–21:59)</option>
+                  <option value="MORNING">Morning (05:00–11:59)</option>
+                  <option value="AFTERNOON">Afternoon (12:00–16:59)</option>
+                  <option value="NIGHT">Night (22:00–04:59)</option>
+                </select>
+              </div>
+
+              <!-- Submit Button -->
+              <div class="sm:col-span-2 lg:col-span-5 flex justify-end pt-1">
+                <button type="submit" class="w-full sm:w-auto h-10 px-6 rounded-lg bg-primary hover:bg-primary-hover text-white text-sm font-semibold transition-colors flex items-center justify-center gap-2 shadow-sm">
+                  <span class="material-symbols-outlined text-[18px]">verified_user</span>
+                  <span>Evaluate Historical Risk</span>
+                </button>
+              </div>
+            </div>
+          </form>
+        </div>
+
+        <!-- RESULTS CONTAINER -->
+        <div id="risk-advisor-results" class="space-y-6">
+          <div class="p-8 rounded-xl bg-white border border-slate-200 text-center space-y-2">
+            <span class="material-symbols-outlined text-slate-400 text-[36px]">shield_check</span>
+            <h3 class="text-base font-semibold text-slate-800">Ready to Simulate Itinerary Risk</h3>
+            <p class="text-sm text-slate-500 max-w-md mx-auto">
+              Configure your carrier, route, month, and scheduled departure slot above to check historical delay exposure and discover lower-delay alternatives.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- ==================================================================== -->
+  <!-- 3. FOOTER -->
+  <!-- ==================================================================== -->
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12 text-xs text-slate-500">
+    <div class="max-w-6xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-left">
+      <div>
+        <p class="font-medium text-slate-700">AirFlight Historical Reliability Platform</p>
+        <p>Data Source: U.S. Bureau of Transportation Statistics (BTS) 2015 Airline On-Time Performance dataset (216,000 verified flight sample).</p>
+      </div>
+      <p class="text-slate-400">Descriptive historical analysis only • Not a future guarantee</p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/navigation.js"></script>
+  <script src="js/api.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
